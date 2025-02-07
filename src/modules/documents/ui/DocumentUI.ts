@@ -12,7 +12,10 @@ export class DocumentUI {
   updateUI(documents: DocumentModel[]) {
     const container = document.querySelector("#documents");
     container!.innerHTML = documents
-      .map((document) => `<div class="document-item">${document.title} </div>`)
+      .map(
+        (document) =>
+          `<div class="document-item">${document.title} - ${document.createdAt} </div>`
+      )
       .join("");
   }
 }

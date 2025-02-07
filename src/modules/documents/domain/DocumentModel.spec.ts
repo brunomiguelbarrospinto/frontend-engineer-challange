@@ -2,7 +2,9 @@ import { DocumentModel, createDocumentMock } from "./DocumentModel";
 import { expect, test } from "vitest";
 
 test("should create a DocumentModel instance", () => {
-  const document = createDocumentMock({ Title: "Bruno" });
+  const document = createDocumentMock({
+    Title: "Bruno",
+  });
   const documentModel = new DocumentModel(document);
 
   expect(documentModel.id).toBe(document.ID);

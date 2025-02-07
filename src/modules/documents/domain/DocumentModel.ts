@@ -13,8 +13,8 @@ export const DocumentSchema = z.object({
   ),
   Version: z.number(),
   Attachments: z.array(z.string()),
-  UpdatedAt: z.date(),
-  CreatedAt: z.date(),
+  UpdatedAt: z.string().datetime(),
+  CreatedAt: z.string().datetime(),
 });
 
 // Create a mock document
