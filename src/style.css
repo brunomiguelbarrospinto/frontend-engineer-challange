@@ -20,16 +20,17 @@ h1 {
       @apply flex justify-between items-center;
     }
   }
-
+  .documents-container__titles {
+    @apply text-lg font-bold text-gray-400 grid grid-cols-3 gap-4 p-4;
+  }
   .documents-container__list {
-    @apply mt-4;
     .documents-container__list__item {
-      @apply bg-white p-4 rounded-xs shadow-xs mb-4;
+      @apply bg-white p-4 rounded-xs shadow-xs mb-4 grid grid-cols-3 gap-4;
       .documents-container__list__item__title {
         @apply text-lg font-bold;
       }
-      .documents-container__list__item__description {
-        @apply text-sm text-[#2E394A];
+      .documents-container__list__item__version {
+        @apply font-semibold text-sm text-gray-500;
       }
     }
   }

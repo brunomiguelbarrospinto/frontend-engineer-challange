@@ -61,6 +61,11 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = /* HTML */ `
   <div class="documents-container">
     <h1 class="documents-container__title">Documents</h1>
     ${renderActions()}
+    <div class="documents-container__titles">
+      <div>Title</div>
+      <div>Contributors</div>
+      <div>Attachment</div>
+    </div>
     <div id="document-list" class="documents-container__list"></div>
   </div>
 `;
