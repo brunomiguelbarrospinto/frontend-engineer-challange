@@ -34,8 +34,8 @@ export class DocumentModel {
   public contributors: string[];
   public version: number;
   public attachment: string[];
-  public createdAt: Date;
-  public updatedAt: Date;
+  public createdAt: string;
+  public updatedAt: string;
 
   constructor(document: Document) {
     this.id = document.ID;

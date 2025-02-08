@@ -7,7 +7,11 @@ export function renderDocumentCard(document: DocumentModel) {
 
       <div class="document-card__version">${document.version}</div>
     </div>
-    <div>${document.contributors}</div>
-    <div>${document.attachment}</div>
+    <div class="document-card__contributors">
+      ${document.contributors.join(", ")}
+    </div>
+    <div class="document-card__attachments">
+      ${document.attachment.join(", ")}
+    </div>
   </div>`;
 }

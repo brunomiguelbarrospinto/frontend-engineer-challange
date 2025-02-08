@@ -14,7 +14,7 @@ label {
 }
 
 select {
-  @apply text-blue-500 text-sm font-bold outline-none;
+  @apply text-blue-500 text-sm font-bold outline-none cursor-pointer;
 }
 
 .documents-container {
@@ -27,30 +27,59 @@ select {
     .documents-container__actions__buttons {
       @apply grid grid-cols-2;
 
-      .documents-container__list__item__actions__buttons__view {
-        @apply p-2 cursor-pointer hover:bg-gray-200 rounded-md text-gray-500;
+      .documents-container__list__item__actions__buttons__view.active {
+        @apply text-black bg-gray-100;
       }
 
-      .documents-container__list__item__actions__buttons__view--active {
-        @apply text-black;
+      .documents-container__list__item__actions__buttons__view {
+        @apply p-2 cursor-pointer hover:bg-gray-200 rounded-md text-gray-500;
       }
     }
   }
   .documents-container__titles {
-    @apply text-lg font-bold text-gray-400 grid grid-cols-3 gap-4 p-4;
+    @apply text-lg font-bold text-gray-400 grid grid-cols-3 gap-4 p-4 pb-0;
+  }
+
+  .documents-container__list {
+    @apply grid grid-cols-1 gap-4 mt-4;
   }
 
   .documents-container__list--grid {
-    @apply grid grid-cols-3 gap-4;
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4;
+
+    .document-card {
+      @apply text-center block;
+
+      .document-card__title,
+      .document-card__version,
+      .document-card__contributors {
+        @apply mb-4;
+      }
+    }
   }
 }
 
 .document-card {
-  @apply bg-white p-4 rounded-xs shadow-xs mb-4 grid grid-cols-3 gap-4;
+  @apply bg-white p-4 rounded-xs shadow-xs grid grid-cols-3 gap-4 transition-all transform;
+
+  &:hover {
+    @apply shadow-md transition-all transform hover:scale-101;
+  }
+
   .document-card__title {
     @apply text-lg font-bold;
   }
   .document-card__version {
     @apply text-sm font-semibold;
   }
+  .document-card__contributors {
+    @apply text-sm font-semibold text-gray-500;
+  }
+  .document-card__attachments {
+    @apply text-sm font-semibold  text-gray-500;
+  }
+}
+
+.document-card--add {
+  @apply bg-gray-100 grid-cols-1 place-content-center text-center cursor-pointer font-semibold text-blue-500 hover:bg-gray-200;
 }
