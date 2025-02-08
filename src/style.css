@@ -9,6 +9,14 @@ h1 {
   @apply text-[#2E394A] text-3xl font-bold;
 }
 
+label {
+  @apply block text-sm font-semibold inline;
+}
+
+select {
+  @apply text-blue-500 text-sm font-bold outline-none;
+}
+
 .documents-container {
   .documents-container__title {
     @apply mb-4;
@@ -17,21 +25,28 @@ h1 {
     @apply flex justify-between items-center;
 
     .documents-container__actions__buttons {
-      @apply flex justify-between items-center;
+      @apply grid grid-cols-2;
+
+      .documents-container__list__item__actions__buttons__view {
+        @apply p-2 cursor-pointer hover:bg-gray-200 rounded-md text-gray-500;
+      }
+
+      .documents-container__list__item__actions__buttons__view--active {
+        @apply text-black;
+      }
     }
   }
   .documents-container__titles {
     @apply text-lg font-bold text-gray-400 grid grid-cols-3 gap-4 p-4;
   }
-  .documents-container__list {
-    .documents-container__list__item {
-      @apply bg-white p-4 rounded-xs shadow-xs mb-4 grid grid-cols-3 gap-4;
-      .documents-container__list__item__title {
-        @apply text-lg font-bold;
-      }
-      .documents-container__list__item__version {
-        @apply font-semibold text-sm text-gray-500;
-      }
-    }
+}
+
+.document-card {
+  @apply bg-white p-4 rounded-xs shadow-xs mb-4 grid grid-cols-3 gap-4;
+  .document-card__title {
+    @apply text-lg font-bold;
+  }
+  .document-card__version {
+    @apply text-sm font-semibold;
   }
 }

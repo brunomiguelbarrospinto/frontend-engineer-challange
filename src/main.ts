@@ -37,22 +37,39 @@ function renderGridIcon() {
 }
 
 function renderSelect() {
-  const sortValues = ["title", "version", "createdAt", "updatedAt"];
+  const sortOptionValues = [
+    { value: "title", text: "Title" },
+    { value: "version", text: "Version" },
+    { value: "createdAt", text: "Created At" },
+  ];
 
   return /* HTML */ `<select id="sort">
     <option value="">Select one...</option>
-    ${sortValues
-      .map((value) => `<option value="${value}">${value}</option>`)
+    ${sortOptionValues
+      .map(
+        (optionValue) =>
+          `<option value="${optionValue.value}">${optionValue.text}</option>`
+      )
       .join("")}
   </select>`;
 }
 
 function renderActions() {
   return /* HTML */ `<div class="documents-container__actions">
-    <div>Sort by: ${renderSelect()}</div>
+    <div><label>Sort by:</label> ${renderSelect()}</div>
     <div class="documents-container__actions__buttons">
-      <div>${renderListIcon()}</div>
-      <div>${renderGridIcon()}</div>
+      <div
+        id="list-layout-button"
+        class="documents-container__list__item__actions__buttons__view"
+      >
+        ${renderListIcon()}
+      </div>
+      <div
+        id="grid-layout-button"
+        class="documents-container__list__item__actions__buttons__view"
+      >
+        ${renderGridIcon()}
+      </div>
     </div>
   </div>`;
 }
@@ -66,7 +83,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = /* HTML */ `
       <div>Contributors</div>
       <div>Attachment</div>
     </div>
-    <div id="document-list" class="documents-container__list"></div>
+    <div
+      id="document-list"
+      class="documents-container__list grid grid-cols-3 gap-4"
+    ></div>
   </div>
 `;
 
