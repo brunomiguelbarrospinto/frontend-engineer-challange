@@ -75,7 +75,7 @@ function renderActions() {
 }
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = /* HTML */ `
-  <div class="documents-container">
+  <div id="documents-container" class="documents-container">
     <h1 class="documents-container__title">Documents</h1>
     ${renderActions()}
     <div class="documents-container__titles">
@@ -83,10 +83,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = /* HTML */ `
       <div>Contributors</div>
       <div>Attachment</div>
     </div>
-    <div
-      id="document-list"
-      class="documents-container__list grid grid-cols-3 gap-4"
-    ></div>
+    <div id="document-list" class="documents-container__list "></div>
   </div>
 `;
 

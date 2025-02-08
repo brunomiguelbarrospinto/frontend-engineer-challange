@@ -10,7 +10,7 @@ h1 {
 }
 
 label {
-  @apply block text-sm font-semibold inline;
+  @apply text-sm font-semibold inline;
 }
 
 select {
@@ -38,6 +38,10 @@ select {
   }
   .documents-container__titles {
     @apply text-lg font-bold text-gray-400 grid grid-cols-3 gap-4 p-4;
+  }
+
+  .documents-container__list--grid {
+    @apply grid grid-cols-3 gap-4;
   }
 }
 

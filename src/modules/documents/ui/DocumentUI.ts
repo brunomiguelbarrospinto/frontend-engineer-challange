@@ -7,7 +7,19 @@ export class DocumentUI {
     document.querySelector("#document-list");
   public listUiMode: string = "list";
 
-  constructor(private documentService: DocumentService) {}
+  constructor(private documentService: DocumentService) {
+    document
+      .querySelector("#grid-layout-button")!
+      .addEventListener("click", () => {
+        this.setListUiMode("grid");
+      });
+
+    document
+      .querySelector("#list-layout-button")!
+      .addEventListener("click", () => {
+        this.setListUiMode("list");
+      });
+  }
 
   async renderDocuments() {
     const documents = await this.documentService.fetchDocuments();
@@ -21,12 +33,11 @@ export class DocumentUI {
   }
 
   updateListUiMode() {
-    this.containerList!.classList.remove(
-      this.listUiMode === "list" ? "grid" : "list"
-    );
-    this.containerList!.classList.add(
-      this.listUiMode === "list" ? "list" : "grid"
-    );
+    this.containerList!.classList.remove("documents-container__list--grid");
+
+    if (this.listUiMode === "grid") {
+      this.containerList!.classList.add("documents-container__list--grid");
+    }
   }
 
   setListUiMode(mode: string) {
