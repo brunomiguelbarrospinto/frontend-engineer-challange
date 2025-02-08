@@ -1,5 +1,6 @@
 import { type DocumentService } from "../application/DocumentService";
 import { DocumentModel } from "../domain/DocumentModel";
+import { renderDocumentCard } from "./DocumentCard";
 
 export class DocumentUI {
   constructor(private documentService: DocumentService) {}
@@ -10,12 +11,9 @@ export class DocumentUI {
   }
 
   updateUI(documents: DocumentModel[]) {
-    const container = document.querySelector("#documents");
+    const container = document.querySelector("#document-list");
     container!.innerHTML = documents
-      .map(
-        (document) =>
-          `<div class="document-item">${document.title} - ${document.createdAt} </div>`
-      )
+      .map((document) => renderDocumentCard(document))
       .join("");
   }
 }
