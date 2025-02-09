@@ -43,7 +43,7 @@ function renderSelect() {
     { value: "createdAt", text: "Created At" },
   ];
 
-  return /* HTML */ `<select id="sort">
+  return /* HTML */ `<select id="sort-select">
     <option value="">Select one...</option>
     ${sortOptionValues
       .map(

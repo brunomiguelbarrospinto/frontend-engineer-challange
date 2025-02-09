@@ -14,18 +14,31 @@ export class DocumentUI {
     "#documents-container-titles"
   );
 
+  public sortSelect: HTMLElement | null =
+    document.querySelector("#sort-select");
+
   public containerList: HTMLElement | null =
     document.querySelector("#document-list");
   public listUiMode: string = "list";
 
   constructor(private documentService: DocumentService) {
     this.updateListUiMode();
+
     this.gridLayoutButton!.addEventListener("click", () => {
       this.setListUiMode("grid");
     });
 
     this.listLayoutButton!.addEventListener("click", () => {
       this.setListUiMode("list");
+    });
+
+    this.sortSelect!.addEventListener("change", async (event) => {
+      const sortValue = (event.target as HTMLSelectElement).value;
+
+      const sortedDocuments = this.documentService.sortDocuments(
+        sortValue as "title" | "version" | "createdAt"
+      );
+      this.updateUI(sortedDocuments);
     });
   }
 

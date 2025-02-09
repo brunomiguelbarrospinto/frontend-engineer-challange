@@ -11,4 +11,10 @@ export class DocumentService {
   async fetchDocuments(): Promise<DocumentModel[]> {
     return await this.documentRepository.getDocuments();
   }
+
+  sortDocuments(sortValue: "title" | "version" | "createdAt"): DocumentModel[] {
+    return this.documentRepository.documents.sort((a, b) =>
+      a[sortValue] > b[sortValue] ? 1 : -1
+    );
+  }
 }
