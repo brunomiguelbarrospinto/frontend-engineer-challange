@@ -24,3 +24,11 @@ test("should fetch documents", async () => {
     documentMocks.map((doc) => new DocumentModel(doc))
   );
 });
+
+test("should sort documents", async () => {
+  const documentModels = await documentService.fetchDocuments();
+  const sortedDocuments = documentService.sortDocuments("title");
+  expect(sortedDocuments).toEqual(
+    documentModels.sort((a, b) => (a.title > b.title ? 1 : -1))
+  );
+});

@@ -17,11 +17,11 @@ test("Should render a list of documents ", async () => {
   );
   server.listen();
 
+  document.body.innerHTML = '<div id="app-documents"></div>';
+
   const documentRepository = new DocumentRepository();
   const documentService = new DocumentService(documentRepository);
   const documentUi = new DocumentUI(documentService);
-
-  document.body.innerHTML = '<div id="documents"></div>';
 
   await documentUi.renderDocuments();
 
