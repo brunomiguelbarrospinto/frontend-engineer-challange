@@ -14,8 +14,6 @@ export class DocumentService {
   }
 
   sortDocuments(sortValue: "title" | "version" | "createdAt"): DocumentModel[] {
-    console.log(this.documentRepository.documents);
-
     return this.documentRepository.documents.sort((a, b) =>
       sortValue === "version"
         ? compare(a[sortValue], b[sortValue], ">")
