@@ -2,26 +2,26 @@ import { type DocumentService } from "../application/DocumentService";
 import { DocumentModel } from "../domain/DocumentModel";
 import { renderDocumentCard } from "./DocumentCard";
 import { renderAddDocumentCard } from "./DocumentCardAdd";
+import { renderContainer } from "./Container";
 
 export class DocumentUI {
-  public gridLayoutButton: HTMLElement | null = document.querySelector(
-    "#grid-layout-button"
-  );
-  public listLayoutButton: HTMLElement | null = document.querySelector(
-    "#list-layout-button"
-  );
-  public listTitles: HTMLElement | null = document.querySelector(
-    "#documents-container-titles"
-  );
-
-  public sortSelect: HTMLElement | null =
-    document.querySelector("#sort-select");
-
-  public containerList: HTMLElement | null =
-    document.querySelector("#document-list");
+  public gridLayoutButton: HTMLElement | null;
+  public listLayoutButton: HTMLElement | null;
+  public listTitles: HTMLElement | null;
+  public sortSelect: HTMLSelectElement | null;
+  public containerList: HTMLElement | null;
   public listUiMode: string = "list";
 
   constructor(private documentService: DocumentService) {
+    document.querySelector<HTMLDivElement>("#app-documents")!.innerHTML =
+      renderContainer();
+
+    this.gridLayoutButton = document.querySelector("#grid-layout-button");
+    this.listLayoutButton = document.querySelector("#list-layout-button");
+    this.listTitles = document.querySelector("#documents-container-titles");
+    this.sortSelect = document.querySelector("#sort-select");
+    this.containerList = document.querySelector("#document-list");
+
     this.updateListUiMode();
 
     this.gridLayoutButton!.addEventListener("click", () => {

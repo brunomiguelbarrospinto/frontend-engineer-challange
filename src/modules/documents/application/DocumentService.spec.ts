@@ -4,9 +4,14 @@ import { expect, test } from "vitest";
 
 import { DocumentRepository } from "../infrastructure/DocumentRepository";
 import { DocumentService } from "./DocumentService";
+import { compare } from "compare-versions";
 import { setupServer } from "msw/node";
 
-const documentMocks = [createDocumentMock()];
+const documentMocks = [
+  createDocumentMock(),
+  createDocumentMock(),
+  createDocumentMock(),
+];
 
 const server = setupServer(
   http.get(import.meta.env.VITE_API_HOST + "/documents", () => {
@@ -27,8 +32,18 @@ test("should fetch documents", async () => {
 
 test("should sort documents", async () => {
   const documentModels = await documentService.fetchDocuments();
-  const sortedDocuments = documentService.sortDocuments("title");
-  expect(sortedDocuments).toEqual(
+  let sortedTitleDocuments = documentService.sortDocuments("title");
+  expect(sortedTitleDocuments).toEqual(
     documentModels.sort((a, b) => (a.title > b.title ? 1 : -1))
+  );
+
+  let sortedVersionDocuments = documentService
+    .sortDocuments("version")
+    .reverse();
+
+  expect(sortedVersionDocuments).toEqual(
+    documentModels.sort((a, b) =>
+      compare(a["version"], b["version"], ">") ? 1 : -1
+    )
   );
 });

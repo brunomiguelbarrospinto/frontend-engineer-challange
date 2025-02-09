@@ -1,5 +1,6 @@
 import { DocumentModel } from "../domain/DocumentModel";
 import { type DocumentRepository } from "../infrastructure/DocumentRepository";
+import { compare } from "compare-versions";
 
 export class DocumentService {
   public documentRepository: DocumentRepository;
@@ -13,8 +14,16 @@ export class DocumentService {
   }
 
   sortDocuments(sortValue: "title" | "version" | "createdAt"): DocumentModel[] {
+    console.log(this.documentRepository.documents);
+
     return this.documentRepository.documents.sort((a, b) =>
-      a[sortValue] > b[sortValue] ? 1 : -1
+      sortValue === "version"
+        ? compare(a[sortValue], b[sortValue], ">")
+          ? 1
+          : -1
+        : a[sortValue] > b[sortValue]
+        ? 1
+        : -1
     );
   }
 }

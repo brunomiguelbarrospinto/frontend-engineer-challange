@@ -11,7 +11,7 @@ export const DocumentSchema = z.object({
       Name: z.string(),
     })
   ),
-  Version: z.number(),
+  Version: z.number().transform((value) => value.toString()),
   Attachments: z.array(z.string()),
   UpdatedAt: z.string().datetime(),
   CreatedAt: z.string().datetime(),
@@ -24,6 +24,13 @@ export function createDocumentMock(
   return { ...generateMock(DocumentSchema), ...overwrite };
 }
 
+// Create a mock DocumentModel
+export function createDocumentModelMock(
+  overwrite?: Partial<z.infer<typeof DocumentSchema>>
+) {
+  return new DocumentModel(createDocumentMock(overwrite));
+}
+
 // Define the document type
 export type Document = z.infer<typeof DocumentSchema>;
 
@@ -32,7 +39,7 @@ export class DocumentModel {
   public id: string;
   public title: string;
   public contributors: string[];
-  public version: number;
+  public version: string;
   public attachment: string[];
   public createdAt: string;
   public updatedAt: string;
@@ -43,7 +50,7 @@ export class DocumentModel {
     this.contributors = document.Contributors.map(
       (contributor) => contributor.Name
     );
-    this.version = document.Version;
+    this.version = document.Version.toString();
     this.attachment = document.Attachments;
     this.createdAt = document.CreatedAt;
     this.updatedAt = document.UpdatedAt;
