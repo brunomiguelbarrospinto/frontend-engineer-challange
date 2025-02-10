@@ -44,15 +44,18 @@ export class DocumentUI {
       this.setListUiMode("list");
     });
 
-    this.sortSelect!.addEventListener("change", async (event) => {
-      const sortValue = (event.target as HTMLSelectElement).value;
-      const sortedDocuments = this.documentService.sortDocuments(
-        sortValue as "title" | "version" | "createdAt"
-      );
-      this.updateUI(sortedDocuments);
+    this.sortSelect!.addEventListener("change", async () => {
+      this.sortDocuments();
     });
   }
 
+  sortDocuments() {
+    const sortValue = this.sortSelect!.value;
+    const sortedDocuments = this.documentService.sortDocuments(
+      sortValue as "title" | "version" | "createdAt"
+    );
+    this.updateUI(sortedDocuments);
+  }
   async renderDocuments() {
     const documents = await this.documentService.fetchDocuments();
     this.updateUI(documents);
@@ -150,6 +153,7 @@ export class DocumentUI {
 
       await this.documentService.createDocument(documentModel);
       this.updateUI(this.documentService.documents());
+      this.sortDocuments();
     });
   }
 }
