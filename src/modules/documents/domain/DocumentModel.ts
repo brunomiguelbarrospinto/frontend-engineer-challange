@@ -1,9 +1,10 @@
 import { generateMock } from "@anatine/zod-mock";
+import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
 // Define the schema for the document
 export const DocumentSchema = z.object({
-  ID: z.string(),
+  ID: z.string().optional(),
   Title: z.string(),
   Contributors: z.array(
     z.object({
@@ -13,8 +14,8 @@ export const DocumentSchema = z.object({
   ),
   Version: z.number().transform((value) => value.toString()),
   Attachments: z.array(z.string()),
-  UpdatedAt: z.string().datetime(),
-  CreatedAt: z.string().datetime(),
+  UpdatedAt: z.string().datetime().optional(),
+  CreatedAt: z.string().datetime().optional(),
 });
 
 // Create a mock document
@@ -45,14 +46,14 @@ export class DocumentModel {
   public updatedAt: string;
 
   constructor(document: Document) {
-    this.id = document.ID;
+    this.id = document.ID || uuidv4();
     this.title = document.Title;
     this.contributors = document.Contributors.map(
       (contributor) => contributor.Name
     );
     this.version = document.Version.toString();
     this.attachment = document.Attachments;
-    this.createdAt = document.CreatedAt;
-    this.updatedAt = document.UpdatedAt;
+    this.createdAt = document.CreatedAt || new Date().toISOString();
+    this.updatedAt = document.UpdatedAt || new Date().toISOString();
   }
 }

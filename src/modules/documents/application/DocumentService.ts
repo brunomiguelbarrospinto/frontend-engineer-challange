@@ -9,6 +9,10 @@ export class DocumentService {
     this.documentRepository = documentRepository;
   }
 
+  documents(): DocumentModel[] {
+    return this.documentRepository.documents;
+  }
+
   async fetchDocuments(): Promise<DocumentModel[]> {
     return await this.documentRepository.getDocuments();
   }
@@ -23,5 +27,8 @@ export class DocumentService {
         ? 1
         : -1
     );
+  }
+  createDocument(document: DocumentModel): void {
+    this.documentRepository.addDocument(document);
   }
 }

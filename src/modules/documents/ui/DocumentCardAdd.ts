@@ -1,8 +1,9 @@
+import { renderCloseIcon } from "./CloseIcon";
+
 export function renderAddDocumentCard() {
   return /* HTML */ `<div
       id="document-card-add"
       class="document-card document-card--add"
-      onclick="window.dialog.showModal();"
     >
       Add document
     </div>
@@ -10,20 +11,42 @@ export function renderAddDocumentCard() {
 }
 
 export function renderAddDocumentDialog() {
-  return /* HTML */ ` <dialog id="dialog">
-    <h2>Add document</h2>
-    <form>
-      <label for="title">Title</label>
-      <input type="text" id="title" name="title" required />
-      <label for="version">Version</label>
-      <input type="text" id="version" name="version" required />
-      <label for="contributors">Contributors</label>
-      <input type="text" id="contributors" name="contributors" required />
-      <label for="attachments">Attachments</label>
-      <input type="text" id="attachments" name="attachments" required />
-      <button type="submit">Save</button>
-    </form>
+  return /* HTML */ ` <dialog id="dialog" class="dialog">
+    <button class="dialog-close-button" onclick="window.dialog.close();">
+      ${renderCloseIcon()}
+    </button>
+    <div class="dialog__content">
+      <div class="dialog__content__title">Add document</div>
+      <form id="add-document-form">
+        <div>
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" required />
+        </div>
+        <div>
+          <label for="version">Version</label>
+          <input type="number" id="version" name="version" required />
+        </div>
 
-    <button onclick="window.dialog.close();">Cerrar</button>
+        <div>
+          <div>
+            <label for="contributors">Contributors</label>
+            <span id="add-contributor" class="add-contributor">add</span>
+            <div id="container-input-contributors">
+              <input
+                id="input-contributor"
+                type="text"
+                name="contributors"
+                required
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="attachments">Attachments</label>
+          <input type="text" id="attachments" name="attachments" required />
+        </div>
+        <button type="submit" class="dialog__content__save-button">Save</button>
+      </form>
+    </div>
   </dialog>`;
 }

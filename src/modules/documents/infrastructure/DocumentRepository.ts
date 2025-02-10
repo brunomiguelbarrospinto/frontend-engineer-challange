@@ -11,4 +11,16 @@ export class DocumentRepository {
     );
     return this.documents;
   }
+
+  async addDocument(document: DocumentModel): Promise<void> {
+    /* await fetch(import.meta.env.VITE_API_HOST + "/documents", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(document),
+    }); */
+
+    this.documents.push(document);
+  }
 }
