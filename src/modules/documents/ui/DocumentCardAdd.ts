@@ -28,23 +28,31 @@ export function renderAddDocumentDialog() {
         </div>
 
         <div>
-          <div>
-            <label for="contributors">Contributors</label>
-            <span id="add-contributor" class="add-contributor">add</span>
-            <div id="container-input-contributors">
-              <input
-                id="input-contributor"
-                type="text"
-                name="contributors"
-                required
-              />
-            </div>
+          <label>Contributors</label>
+          <span id="add-contributor" class="add">add</span>
+          <div id="container-input-contributors">
+            <input
+              id="input-contributor"
+              type="text"
+              name="contributors"
+              required
+            />
           </div>
         </div>
+
         <div>
-          <label for="attachments">Attachments</label>
-          <input type="text" id="attachments" name="attachments" required />
+          <label>Attachments</label>
+          <span id="add-attachments" class="add">add</span>
+          <div id="container-input-attachments">
+            <input
+              id="input-attachments"
+              type="text"
+              name="attachments"
+              required
+            />
+          </div>
         </div>
+
         <button type="submit" class="dialog__content__save-button">Save</button>
       </form>
     </div>

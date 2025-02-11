@@ -135,7 +135,7 @@ input {
 label {
   @apply text-sm font-semibold inline-block mb-2;
 }
-.add-contributor {
+.add {
   @apply bg-green-500 text-xs cursor-pointer rounded-md text-white p-0.5 px-2 hover:bg-green-600;
 }
 

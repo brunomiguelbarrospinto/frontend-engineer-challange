@@ -1,9 +1,8 @@
 import { type DocumentService } from "../application/DocumentService";
-import { DocumentModel } from "../domain/DocumentModel";
+import { DocumentModel, Contributor } from "../domain/DocumentModel";
 import { renderDocumentCard } from "./DocumentCard";
 import { renderAddDocumentCard } from "./DocumentCardAdd";
 import { renderContainer } from "./Container";
-import { v4 as uuidv4 } from "uuid";
 
 declare global {
   interface Window {
@@ -102,6 +101,10 @@ export class DocumentUI {
       "#add-contributor"
     ) as HTMLElement;
 
+    const addAttachmentsButton = document.querySelector(
+      "#add-attachments"
+    ) as HTMLElement;
+
     addDocumentCard!.addEventListener("click", () => {
       window.dialog.showModal();
     });
@@ -118,6 +121,21 @@ export class DocumentUI {
 
       if (document.querySelectorAll("input[name=contributors]").length > 4) {
         addContributorButton.style.display = "none";
+      }
+    });
+
+    addAttachmentsButton?.addEventListener("click", () => {
+      const containerInputAttachments = document.querySelector(
+        "#container-input-attachments"
+      );
+      const inputContributor = document.createElement("input");
+      inputContributor.type = "text";
+      inputContributor.name = "attachments";
+      inputContributor.required = true;
+      containerInputAttachments?.appendChild(inputContributor);
+
+      if (document.querySelectorAll("input[name=attachments]").length > 4) {
+        addAttachmentsButton.style.display = "none";
       }
     });
 
@@ -139,19 +157,25 @@ export class DocumentUI {
         }
       });
 
-      const documentModel = new DocumentModel({
+      await this.documentService.createDocument({
         Title: formValues.title as string,
         Version: formValues.version as string,
-        Contributors: (formValues.contributors as []).map(
-          (contributor: string) => ({
-            ID: uuidv4(),
-            Name: contributor,
-          })
-        ),
-        Attachments: [formValues.attachments as string],
+        Contributors: Array.isArray(formValues.contributors)
+          ? (formValues.contributors as string[]).map(
+              (contributor: string): Contributor => {
+                return { ID: undefined, Name: contributor };
+              }
+            )
+          : [
+              {
+                ID: undefined,
+                Name: formValues.contributors as string,
+              },
+            ],
+        Attachments: Array.isArray(formValues.attachments)
+          ? (formValues.attachments as string[])
+          : [formValues.attachments as string],
       });
-
-      await this.documentService.createDocument(documentModel);
       this.updateUI(this.documentService.documents());
       this.sortDocuments();
     });

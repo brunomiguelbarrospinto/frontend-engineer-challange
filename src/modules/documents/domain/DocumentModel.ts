@@ -2,16 +2,19 @@ import { generateMock } from "@anatine/zod-mock";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
+// Define the schema for the contributor
+export const ContributorSchema = z.object({
+  ID: z.string().optional(),
+  Name: z.string(),
+});
+
+export type Contributor = z.infer<typeof ContributorSchema>;
+
 // Define the schema for the document
 export const DocumentSchema = z.object({
   ID: z.string().optional(),
   Title: z.string(),
-  Contributors: z.array(
-    z.object({
-      ID: z.string(),
-      Name: z.string(),
-    })
-  ),
+  Contributors: z.array(ContributorSchema),
   Version: z.number().transform((value) => value.toString()),
   Attachments: z.array(z.string()),
   UpdatedAt: z.string().datetime().optional(),

@@ -1,6 +1,7 @@
-import { DocumentModel } from "../domain/DocumentModel";
+import { DocumentModel, Document, Contributor } from "../domain/DocumentModel";
 import { type DocumentRepository } from "../infrastructure/DocumentRepository";
 import { compare } from "compare-versions";
+import { v4 as uuidv4 } from "uuid";
 
 export class DocumentService {
   public documentRepository: DocumentRepository;
@@ -28,7 +29,16 @@ export class DocumentService {
         : -1
     );
   }
-  createDocument(document: DocumentModel): void {
-    this.documentRepository.addDocument(document);
+  createDocument(document: Partial<Document>): void {
+    const newDocument = new DocumentModel({
+      Title: document.Title as string,
+      Version: document.Version as string,
+      Contributors: document.Contributors?.map((contributor) => ({
+        ID: uuidv4(),
+        Name: contributor.Name,
+      })) as Contributor[],
+      Attachments: document.Attachments as string[],
+    });
+    this.documentRepository.addDocument(newDocument);
   }
 }
