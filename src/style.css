@@ -60,7 +60,7 @@ select {
 }
 
 .document-card {
-  @apply bg-white p-4 rounded-xs shadow-xs grid grid-cols-3 gap-4 transition-all transform;
+  @apply bg-white p-4 pb-16 rounded-xs shadow-xs grid grid-cols-3 gap-4 transition-all transform;
 
   &:hover {
     @apply shadow-md transition-all transform hover:scale-101;
@@ -77,6 +77,9 @@ select {
   }
   .document-card__attachments {
     @apply text-sm font-semibold  text-gray-500;
+  }
+  .document-card__created-at {
+    @apply text-xs font-bold absolute right-4 bottom-4 italic text-blue-400;
   }
 }
 

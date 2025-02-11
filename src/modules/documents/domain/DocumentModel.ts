@@ -46,6 +46,7 @@ export class DocumentModel {
   public version: string;
   public attachment: string[];
   public createdAt: string;
+  public createdAtRelative: string;
   public updatedAt: string;
 
   constructor(document: Document) {
@@ -58,5 +59,6 @@ export class DocumentModel {
     this.attachment = document.Attachments;
     this.createdAt = document.CreatedAt || new Date().toISOString();
     this.updatedAt = document.UpdatedAt || new Date().toISOString();
+    this.createdAtRelative = new Date(this.createdAt).toLocaleDateString();
   }
 }
