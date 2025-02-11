@@ -1,5 +1,5 @@
 import { HttpResponse, http } from "msw";
-import { afterEach, beforeEach, expect, test, vi } from "vitest";
+import { beforeEach, expect, test, vi } from "vitest";
 
 import { DocumentRepository } from "../infrastructure/DocumentRepository";
 import { DocumentService } from "../application/DocumentService";
@@ -20,10 +20,6 @@ beforeEach(() => {
   );
   server.listen();
   document.body.innerHTML = '<div id="app-documents"></div>';
-});
-
-afterEach(() => {
-  document.body.innerHTML = "";
 });
 
 test("Should render a list of documents", async () => {
