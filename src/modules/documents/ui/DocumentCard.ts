@@ -13,7 +13,6 @@ export function renderDocumentCard(document: DocumentModel) {
     <div class="document-card__attachments">
       ${document.attachment.join(", ")}
     </div>
-
     <div class="document-card__created-at">
       Created: ${document.createdAtRelative}
     </div>

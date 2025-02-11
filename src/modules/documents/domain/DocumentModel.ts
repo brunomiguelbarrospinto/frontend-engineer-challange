@@ -1,4 +1,5 @@
 import { generateMock } from "@anatine/zod-mock";
+import { getRelativeTime } from "../../../utils/dayjs";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
@@ -59,6 +60,8 @@ export class DocumentModel {
     this.attachment = document.Attachments;
     this.createdAt = document.CreatedAt || new Date().toISOString();
     this.updatedAt = document.UpdatedAt || new Date().toISOString();
-    this.createdAtRelative = new Date(this.createdAt).toLocaleDateString();
+    this.createdAtRelative = getRelativeTime(
+      new Date(this.createdAt).toISOString()
+    );
   }
 }

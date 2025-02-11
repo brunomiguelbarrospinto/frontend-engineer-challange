@@ -84,7 +84,7 @@ select {
 }
 
 .document-card--add {
-  @apply bg-gray-100 grid-cols-1 place-content-center text-center cursor-pointer font-semibold text-blue-500 hover:bg-gray-200;
+  @apply bg-gray-100 pb-4 grid-cols-1 place-content-center text-center cursor-pointer font-semibold text-blue-500 hover:bg-gray-200;
 }
 
 dialog {

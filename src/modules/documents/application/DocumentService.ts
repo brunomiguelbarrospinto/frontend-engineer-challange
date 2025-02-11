@@ -21,10 +21,10 @@ export class DocumentService {
   sortDocuments(sortValue: "title" | "version" | "createdAt"): DocumentModel[] {
     return this.documentRepository.documents.sort((a, b) =>
       sortValue === "version"
-        ? compare(a[sortValue], b[sortValue], ">")
+        ? compare(a[sortValue], b[sortValue], "<")
           ? 1
           : -1
-        : a[sortValue] > b[sortValue]
+        : a[sortValue] < b[sortValue]
         ? 1
         : -1
     );
