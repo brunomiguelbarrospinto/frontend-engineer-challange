@@ -53,7 +53,13 @@ export function renderAddDocumentDialog() {
           </div>
         </div>
 
-        <button type="submit" class="dialog__content__save-button">Save</button>
+        <button
+          id="submit-add-document-button"
+          type="submit"
+          class="dialog__content__save-button"
+        >
+          Save
+        </button>
       </form>
     </div>
   </dialog>`;

@@ -34,16 +34,21 @@ test("should sort documents", async () => {
   const documentModels = await documentService.fetchDocuments();
   let sortedTitleDocuments = documentService.sortDocuments("title");
   expect(sortedTitleDocuments).toEqual(
-    documentModels.sort((a, b) => (a.title > b.title ? 1 : -1))
+    documentModels.sort((a, b) => (a.title < b.title ? 1 : -1))
   );
 
-  let sortedVersionDocuments = documentService
-    .sortDocuments("version")
-    .reverse();
-
+  let sortedVersionDocuments = documentService.sortDocuments("version");
   expect(sortedVersionDocuments).toEqual(
     documentModels.sort((a, b) =>
-      compare(a["version"], b["version"], ">") ? 1 : -1
+      compare(a["version"], b["version"], "<") ? 1 : -1
     )
+  );
+});
+
+test("should create document", async () => {
+  const document = createDocumentMock();
+  documentService.createDocument(document);
+  expect(documentService.documents()).toContainEqual(
+    new DocumentModel(document)
   );
 });

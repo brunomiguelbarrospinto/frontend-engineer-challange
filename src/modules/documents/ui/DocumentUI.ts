@@ -22,6 +22,8 @@ export class DocumentUI {
   public listUiMode: string = "list";
   public addDocumentForm!: HTMLFormElement | null;
   public addDocumentCard!: HTMLElement | null;
+  public addContributorButton!: HTMLElement | null;
+  public addAttachmentsButton!: HTMLElement | null;
 
   constructor(private documentService: DocumentService) {
     document.querySelector<HTMLDivElement>("#app-documents")!.innerHTML =
@@ -90,26 +92,26 @@ export class DocumentUI {
   }
 
   handleFormSubmit() {
-    const addDocumentCard = document.querySelector(
+    this.addDocumentCard = document.querySelector(
       "#document-card-add"
     ) as HTMLElement;
     const addDocumentForm = document.querySelector(
       "#add-document-form"
     ) as HTMLFormElement;
 
-    const addContributorButton = document.querySelector(
+    this.addContributorButton = document.querySelector(
       "#add-contributor"
     ) as HTMLElement;
 
-    const addAttachmentsButton = document.querySelector(
+    this.addAttachmentsButton = document.querySelector(
       "#add-attachments"
     ) as HTMLElement;
 
-    addDocumentCard!.addEventListener("click", () => {
-      window.dialog.showModal();
+    this.addDocumentCard!.addEventListener("click", () => {
+      (document.getElementById("dialog") as HTMLDialogElement)?.showModal();
     });
 
-    addContributorButton?.addEventListener("click", () => {
+    this.addContributorButton?.addEventListener("click", () => {
       const containerInputContributors = document.querySelector(
         "#container-input-contributors"
       );
@@ -120,11 +122,13 @@ export class DocumentUI {
       containerInputContributors?.appendChild(inputContributor);
 
       if (document.querySelectorAll("input[name=contributors]").length > 4) {
-        addContributorButton.style.display = "none";
+        if (this.addContributorButton) {
+          this.addContributorButton.style.display = "none";
+        }
       }
     });
 
-    addAttachmentsButton?.addEventListener("click", () => {
+    this.addAttachmentsButton?.addEventListener("click", () => {
       const containerInputAttachments = document.querySelector(
         "#container-input-attachments"
       );
@@ -135,7 +139,9 @@ export class DocumentUI {
       containerInputAttachments?.appendChild(inputContributor);
 
       if (document.querySelectorAll("input[name=attachments]").length > 4) {
-        addAttachmentsButton.style.display = "none";
+        if (this.addAttachmentsButton) {
+          this.addAttachmentsButton.style.display = "none";
+        }
       }
     });
 

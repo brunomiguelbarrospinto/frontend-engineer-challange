@@ -1,5 +1,5 @@
 import { HttpResponse, http } from "msw";
-import { beforeEach, expect, test } from "vitest";
+import { afterEach, beforeEach, expect, test, vi } from "vitest";
 
 import { DocumentRepository } from "../infrastructure/DocumentRepository";
 import { DocumentService } from "../application/DocumentService";
@@ -11,14 +11,19 @@ import { setupServer } from "msw/node";
 const documentMocks = [createDocumentMock()];
 
 beforeEach(() => {
+  globalThis.HTMLDialogElement.prototype.showModal = vi.fn();
+
   const server = setupServer(
     http.get(import.meta.env.VITE_API_HOST + "/documents", () => {
       return HttpResponse.json(documentMocks);
     })
   );
   server.listen();
-
   document.body.innerHTML = '<div id="app-documents"></div>';
+});
+
+afterEach(() => {
+  document.body.innerHTML = "";
 });
 
 test("Should render a list of documents", async () => {
@@ -93,4 +98,128 @@ test("Should sort documents by version", async () => {
       compare(a.version, b.version, ">") ? 1 : -1
     )[0].version
   );
+});
+
+test("Should create document with single contributors and attachments", async () => {
+  const documentRepository = new DocumentRepository();
+  const documentService = new DocumentService(documentRepository);
+  const documentUi = new DocumentUI(documentService);
+
+  await documentUi.renderDocuments();
+
+  documentUi.addDocumentCard?.click();
+  expect(documentUi.containerList?.innerHTML).toContain("form");
+
+  // fill title input
+  const titleInput = document.querySelector(
+    '[name="title"]'
+  ) as HTMLInputElement;
+  titleInput.value = "New Document";
+  titleInput.dispatchEvent(new Event("input", { bubbles: true }));
+  expect(titleInput.value).toBe("New Document");
+
+  //Fill version input
+  const versionInput = document.querySelector(
+    '[name="version"]'
+  ) as HTMLInputElement;
+  versionInput.value = "100";
+  versionInput.dispatchEvent(new Event("input", { bubbles: true }));
+  expect(versionInput.value).toBe("100");
+
+  // fill contributors inputs
+  const contributorsInputs = document.querySelectorAll('[name="contributors"]');
+  contributorsInputs.forEach((input, index) => {
+    (input as HTMLInputElement).value = `Contributor ${index + 1}`;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    expect((input as HTMLInputElement).value).toBe(`Contributor ${index + 1}`);
+  });
+
+  // fill attachments inputs
+  const attachmentsInputs = document.querySelectorAll('[name="attachments"]');
+  attachmentsInputs.forEach((input, index) => {
+    (input as HTMLInputElement).value = `Attachment ${index + 1}`;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    expect((input as HTMLInputElement).value).toBe(`Attachment ${index + 1}`);
+  });
+
+  // submit form with submit button doing click
+  const submitAddDocumentButton = document.querySelector(
+    "#submit-add-document-button"
+  ) as HTMLButtonElement;
+
+  submitAddDocumentButton?.click();
+
+  // check if the document was created
+  expect(documentRepository.documents.length).toBe(2);
+});
+
+test("Should create document with multiple contributors and attachments", async () => {
+  const documentRepository = new DocumentRepository();
+  const documentService = new DocumentService(documentRepository);
+  const documentUi = new DocumentUI(documentService);
+
+  await documentUi.renderDocuments();
+
+  documentUi.addDocumentCard?.click();
+  expect(documentUi.containerList?.innerHTML).toContain("form");
+
+  //clic in add contributors button 5 times
+  for (let i = 0; i < 4; i++) {
+    documentUi.addContributorButton?.click();
+  }
+  // addContributorButton should be hide
+  expect(documentUi.addContributorButton?.style.display).toBe("none");
+  // check not more than 5 contributors inputs
+  expect(document.querySelectorAll('[name="contributors"]').length).toBe(5);
+
+  //clic in add attachment button 5 times
+  for (let i = 0; i < 4; i++) {
+    documentUi.addAttachmentsButton?.click();
+  }
+  // addAttachmentsButton should be hide
+  expect(documentUi.addAttachmentsButton?.style.display).toBe("none");
+  // check not more than 5 attachments inputs
+  expect(document.querySelectorAll('[name="attachments"]').length).toBe(5);
+
+  // fill title input
+  const titleInput = document.querySelector(
+    '[name="title"]'
+  ) as HTMLInputElement;
+  titleInput.value = "New Document";
+  titleInput.dispatchEvent(new Event("input", { bubbles: true }));
+  expect(titleInput.value).toBe("New Document");
+
+  //Fill version input
+  const versionInput = document.querySelector(
+    '[name="version"]'
+  ) as HTMLInputElement;
+  versionInput.value = "100";
+  versionInput.dispatchEvent(new Event("input", { bubbles: true }));
+  expect(versionInput.value).toBe("100");
+
+  // fill contributors inputs
+  const contributorsInputs = document.querySelectorAll('[name="contributors"]');
+  contributorsInputs.forEach((input, index) => {
+    (input as HTMLInputElement).value = `Contributor ${index + 1}`;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    expect((input as HTMLInputElement).value).toBe(`Contributor ${index + 1}`);
+  });
+
+  // fill attachments inputs
+  const attachmentsInputs = document.querySelectorAll('[name="attachments"]');
+  attachmentsInputs.forEach((input, index) => {
+    (input as HTMLInputElement).value = `Attachment ${index + 1}`;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    expect((input as HTMLInputElement).value).toBe(`Attachment ${index + 1}`);
+  });
+
+  // submit form with submit button doing click
+  const submitAddDocumentButton = document.querySelector(
+    "#submit-add-document-button"
+  ) as HTMLButtonElement;
+
+  submitAddDocumentButton?.click();
+
+  // check if the document was created
+  expect(documentRepository.documents.length).toBe(2);
 });

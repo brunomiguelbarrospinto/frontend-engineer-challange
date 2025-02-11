@@ -31,6 +31,7 @@ export class DocumentService {
   }
   createDocument(document: Partial<Document>): void {
     const newDocument = new DocumentModel({
+      ...document,
       Title: document.Title as string,
       Version: document.Version as string,
       Contributors: document.Contributors?.map((contributor) => ({
