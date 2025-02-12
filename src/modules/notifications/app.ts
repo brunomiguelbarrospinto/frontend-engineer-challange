@@ -7,5 +7,5 @@ import { NotificationsUI } from "./ui/NotificationsUI";
 export function initNotificationsModule() {
   const notificationRepository = new NotificationsRepository();
   const notificationService = new NotificationService(notificationRepository);
-  const notificationsUI = new NotificationsUI(notificationService);
+  new NotificationsUI(notificationService);
 }
