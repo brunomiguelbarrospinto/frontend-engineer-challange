@@ -17,6 +17,10 @@ select {
   @apply text-blue-500 text-sm font-bold outline-none cursor-pointer;
 }
 
+#app-documents {
+  @apply py-28;
+}
+
 .documents-container {
   .documents-container__title {
     @apply mb-4;

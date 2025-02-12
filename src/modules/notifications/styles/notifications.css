@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+#notifications-badge-notification {
+  @apply w-full flex justify-center items-center mt-12;
+}
+
+.notifications-badge {
+  @apply text-gray-400 hover:text-gray-600 bg-gray-50 hover:bg-gray-100  py-2 px-4 inline-grid grid-cols-1 font-semibold;
+  @apply rounded-full shadow hover:shadow-lg transition-all duration-300 ease-in-out;
+
+  @apply cursor-pointer m-auto fixed z-10;
+
+  .notifications-badge__content {
+    @apply flex justify-between items-center;
+  }
+
+  .notifications-badge__icon {
+    @apply text-black relative inline-block;
+
+    .notifications-badge__icon__number {
+      @apply absolute top-[-5px] right-[-5px]  text-white bg-blue-500 text-xs w-5 h-5 flex justify-center items-center rounded-full;
+    }
+  }
+
+  .notifications-badge__text {
+    @apply inline-block  font-semibold ml-3;
+  }
+
+  .notifications-badge__icon svg {
+    @apply transition-all duration-300 ease-in-out rotate-0;
+  }
+
+  :hover {
+    .notifications-badge__icon svg {
+      @apply transition-all duration-300 ease-in-out rotate-10;
+    }
+  }
+}
