@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+#app-documents {
+  @apply py-28;
+}
+
+.documents-container {
+  .documents-container__title {
+    @apply mb-4;
+  }
+  .documents-container__actions {
+    @apply flex justify-between items-center;
+
+    .documents-container__actions__buttons {
+      @apply grid grid-cols-2;
+
+      .documents-container__list__item__actions__buttons__view.active {
+        @apply text-black bg-gray-100;
+      }
+
+      .documents-container__list__item__actions__buttons__view {
+        @apply p-2 cursor-pointer hover:bg-gray-200 rounded-md text-gray-500;
+      }
+    }
+  }
+  .documents-container__titles {
+    @apply text-lg font-bold text-gray-400 grid grid-cols-3 gap-4 p-4 pb-0;
+  }
+
+  .documents-container__list {
+    @apply grid grid-cols-1 gap-4 mt-4;
+  }
+
+  .documents-container__list--grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4;
+
+    .document-card {
+      @apply text-center block;
+
+      .document-card__title,
+      .document-card__version,
+      .document-card__contributors {
+        @apply mb-4;
+      }
+    }
+  }
+}
+
+.document-card {
+  @apply bg-white p-4 pb-16 rounded-xs shadow-xs grid grid-cols-3 gap-4 transition-all transform;
+
+  &:hover {
+    @apply shadow-md transition-all transform hover:scale-101;
+  }
+
+  .document-card__title {
+    @apply text-lg font-bold;
+  }
+  .document-card__version {
+    @apply text-sm font-semibold;
+  }
+  .document-card__contributors {
+    @apply text-sm font-semibold text-gray-500;
+  }
+  .document-card__attachments {
+    @apply text-sm font-semibold  text-gray-500;
+  }
+  .document-card__created-at {
+    @apply text-xs font-bold absolute right-4 bottom-4 italic text-blue-400;
+  }
+}
+
+.document-card--add {
+  @apply bg-gray-100 pb-4 grid-cols-1 place-content-center text-center cursor-pointer font-semibold text-blue-500 hover:bg-gray-200;
+}
+
+dialog {
+  margin: auto;
+  opacity: 0;
+  @apply w-full max-w-120;
+}
+
+dialog[open] {
+  animation: fadein 0.2s ease-in forwards;
+}
+
+dialog::backdrop {
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog[open]::backdrop {
+  animation: fadein 0.2s ease-in forwards;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dialog__content {
+  @apply bg-white p-8 rounded-md shadow-md;
+}
+
+.dialog__content__title {
+  @apply text-2xl font-bold text-[#2E394A] mb-4;
+}
+
+.dialog__content__actions {
+  @apply flex justify-end mt-4;
+
+  .dialog__content__actions__button {
+    @apply p-2 cursor-pointer hover:bg-gray-200 rounded-md text-gray-500;
+  }
+}
+
+input {
+  @apply w-full p-2 px-3 border border-gray-300 rounded-md mb-3;
+}
+
+label {
+  @apply text-sm font-semibold inline-block mb-2;
+}
+.add {
+  @apply bg-green-500 text-xs cursor-pointer rounded-md text-white p-0.5 px-2 hover:bg-green-600;
+}
+
+.dialog__content__save-button {
+  @apply font-semibold bg-blue-500 text-white p-1 px-3 rounded-md cursor-pointer;
+}
+
+.dialog-close-button {
+  @apply absolute top-8 right-8 cursor-pointer  p-2 hover:bg-gray-100 hover:text-black rounded-md text-gray-500;
+}

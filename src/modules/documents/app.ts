@@ -1,3 +1,5 @@
+import "./styles/documents.css";
+
 import { DocumentRepository } from "./infrastructure/DocumentRepository";
 import { DocumentService } from "./application/DocumentService";
 import { DocumentUI } from "./ui/DocumentUI";
